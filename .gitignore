@@ -1,5 +1,7 @@
 #Exclude data folder's contents
 data/*
+logs/*
 
 #Include the folder itself
 !data/.gitkeep
+!logs/.gitkeep

@@ -1,5 +1,5 @@
 from utils import argParser
-from dataloader import BirdLoader
+from dataloader import BirdLoader, CifarLoader
 import matplotlib.pyplot as plt
 import numpy as np
 import models
@@ -12,6 +12,7 @@ def train(net, dataloader, optimizer, criterion, epoch):
 	running_loss = 0.0
 	total_loss = 0.0
 
+	enumerate(dataloader.trainloader, 0)
 	for i, data in enumerate(dataloader.trainloader, 0):
 		# get the inputs
 		inputs, labels = data
@@ -56,8 +57,8 @@ def test(net, dataloader, tag=''):
 	net.log('%s Accuracy of the network: %d %%' % (tag,
 		100 * correct / total))
 
-	class_correct = list(0. for i in range(10))
-	class_total = list(0. for i in range(10))
+	class_correct = list(0. for i in range(200))
+	class_total = list(0. for i in range(200))
 	with torch.no_grad():
 		for data in dataTestLoader:
 			images, labels = data
@@ -70,7 +71,7 @@ def test(net, dataloader, tag=''):
 				class_total[label] += 1
 
 
-	for i in range(10):
+	for i in range(200):
 		net.log('%s Accuracy of %5s : %2d %%' % (
 			tag, dataloader.classes[i], 100 * class_correct[i] / class_total[i]))
 
@@ -89,7 +90,7 @@ def main():
 	for epoch in range(args.epochs):  # loop over the dataset multiple times
 		net.adjust_learning_rate(optimizer, epoch, args)
 		train(net, cifarLoader, optimizer, criterion, epoch)
-		if epoch % 1 == 0: # Comment out this part if you want a faster training
+		if epoch < 10 or epoch % 5 == 0: # Comment out this part if you want a faster training
 			test(net, cifarLoader, 'Train')
 			test(net, cifarLoader, 'Test')
 

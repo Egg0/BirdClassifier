@@ -40,11 +40,11 @@ class LazyNet(BaseModel):
 	def __init__(self):
 		super(LazyNet, self).__init__()
 		# TODO: Define model here
-		self.fc1 = nn.Linear(32 * 32 * 3, 10)
+		self.fc1 = nn.Linear(128 * 128 * 3, 10)
 
 	def forward(self, x):
 		# TODO: Implement forward pass for LazyNet
-		x = x.view(-1, 32*32*3)
+		x = x.view(-1, 128*128*3)
 		x = self.fc1(x);
 		return x
 		
@@ -53,13 +53,13 @@ class BoringNet(BaseModel):
 	def __init__(self):
 		super(BoringNet, self).__init__()
 		# TODO: Define model here
-		self.fc1 = nn.Linear(32 * 32 * 3, 120)
+		self.fc1 = nn.Linear(256 * 256 * 3, 120)
 		self.fc2 = nn.Linear(120, 84)
 		self.fc3 = nn.Linear(84, 10)
 
 	def forward(self, x):
 		# TODO: Implement forward pass for BoringNet
-		x = x.view(-1, 32*32*3)
+		x = x.view(-1, 256*256*3)
 		x = F.relu(self.fc1(x));
 		x = F.relu(self.fc2(x));
 		x = self.fc3(x);
@@ -70,20 +70,18 @@ class CoolNet(BaseModel):
 	def __init__(self):
 		super(CoolNet, self).__init__()
 		# TODO: Define model here
-		self.conv1 = nn.Conv2d(3, 12, kernel_size=5)
-		self.conv2 = nn.Conv2d(12, 24, kernel_size=5)
+		self.conv1 = nn.Conv2d(3, 6, kernel_size=5)
+		self.conv2 = nn.Conv2d(6, 16, kernel_size=5)
 
-		self.fc1 = nn.Linear(24 * 5 * 5, 120)
-		self.fc2 = nn.Linear(120, 84)
-		self.fc3 = nn.Linear(84, 10)
+		self.fc1 = nn.Linear(13456, 300)
+		self.fc2 = nn.Linear(300, 200)
 
 	def forward(self, x):
 		# TODO: Implement forward pass for CoolNet
 		x = F.relu(F.max_pool2d(self.conv1(x), 2))
 		x = F.relu(F.max_pool2d(self.conv2(x), 2))
 		
-		x = x.view(-1, 24 * 5 * 5)
+		x = x.view(-1, 13456)
 		x = F.relu(self.fc1(x));
-		x = F.relu(self.fc2(x));
-		x = self.fc3(x);
+		x = self.fc2(x);
 		return x
