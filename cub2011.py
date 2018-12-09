@@ -31,6 +31,8 @@ class MyCub2011(Dataset):
 
 		image = Image.open(img_name)
 		image = image.convert('RGB')
+		left, top, right, bottom = self.bboxes[idx]['xmin'], self.bboxes[idx]['ymin'], self.bboxes[idx]['xmax'], self.bboxes[idx]['ymax']
+		image = image.crop((left, top, right, bottom))
 
 		if self.transform is not None:
 			image = self.transform(image)
