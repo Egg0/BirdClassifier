@@ -24,10 +24,16 @@ def main():
 				test_accuracy.append(float(line[:-1].split(' ')[-2]))
 
 	
-	plt.plot(train_accuracy)
-	plt.plot(test_accuracy)
+	xs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+	plt.plot(xs, train_accuracy)
+	plt.plot(xs, test_accuracy)
+	plt.xlabel('Epoch')
+	plt.ylabel('Accuracy %')
+	plt.legend(['Training', 'Test'])
 	plt.show()
 	plt.plot(train_loss)
+	plt.xlabel('Epoch')
+	plt.ylabel('CE Loss')
 	plt.show()
 
 
